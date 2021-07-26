@@ -56,6 +56,7 @@ export default function ExpenseForm(props) {
     message: '',
     severity: ''
   });
+  let tempCounter = 1;
 
   function addExpense() {
     let newExpense = {
@@ -66,10 +67,10 @@ export default function ExpenseForm(props) {
     const dateObj = new Date();
     console.log(newExpense)
 
-    newExpense = props.createData("temp", category, name, cost, dateObj.toLocaleDateString());
+    newExpense = props.createData("temp" + tempCounter, category, name, cost, dateObj.toLocaleDateString());
+    tempCounter++;
 
     props.setRows([...props.rows, newExpense])
-    /* TODO POST TO DB */
     return true
   }
 
@@ -80,6 +81,7 @@ export default function ExpenseForm(props) {
 
     setSnack(false);
   };
+
   function checkCost() {
     if (!category) {
       setCategory("Other")
@@ -94,6 +96,7 @@ export default function ExpenseForm(props) {
     }
     return true
   }
+  
   return (
     <div className={classes.expenseForm}>
       <Typography className={classes.formHeader} variant="h4">Add Expense</Typography>
