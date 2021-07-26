@@ -1,5 +1,6 @@
-import React from 'react';
-import { Typography, TextField, Button } from '@material-ui/core';
+import React, { useState } from 'react';
+import { Typography, TextField, Button, Snackbar } from '@material-ui/core';
+import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from "../theme";
 
@@ -41,10 +42,53 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 export default function ExpenseForm() {
   const classes = useStyles();
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
+  const [cost, setCost] = useState(0);
+  const [snack, setSnack] = useState(false);
+  const [alert, setAlert] = useState({
+    message: '',
+    severity: ''
+  });
 
+  function addExpense() {
+    let newExpense = {
+      category: category,
+      name: name,
+      cost: cost
+    }
+    console.log(newExpense)
+    /* TODO POST TO DB */
+    return true
+  }
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnack(false);
+  };
+  function checkCost() {
+    if (!category) {
+      setCategory("Other")
+    }
+    if (!name) {
+      setAlert({ message: 'Please enter a Name!', severity: 'warning' })
+      return false
+    }
+    if (cost === 0) {
+      setAlert({ message: 'Please enter a number!', severity: 'warning' })
+      return false
+    }
+    return true
+  }
   return (
     <div className={classes.expenseForm}>
       <Typography className={classes.formHeader} variant="h4">Add Expense</Typography>
@@ -52,18 +96,43 @@ export default function ExpenseForm() {
         variant="outlined"
         className={classes.expenseInput}
         classes={{ focused: classes.expenseInputFocused }}
+        onChange={(event) => setCategory(event.target.value)}
       />
-      <TextField id="filled-basic" label="Title"
+      <TextField id="filled-basic" label="Name"
         variant="outlined"
         className={classes.expenseInput}
         classes={{ focused: classes.expenseInputFocused }}
+        onChange={(event) => setName(event.target.value)}
       />
       <TextField id="filled-basic" label="Cost"
+        type="number"
         variant="outlined"
         className={classes.expenseInput}
         classes={{ focused: classes.expenseInputFocused }}
+        onChange={(event) => setCost(event.target.value)}
       />
-      <Button variant="contained" className={classes.expenseSubmit}>Submit</Button>
+      <Button variant="contained"
+        className={classes.expenseSubmit}
+        onClick={(event) => {
+          if (!checkCost()) {
+            setSnack(true)
+          } else {
+            addExpense()
+            handleClose()
+          }
+        }}
+      >
+        Submit
+        </Button>
+      <Snackbar
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        open={snack}
+        key={'report-snack-bar'}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert onClose={handleClose} severity={alert.severity}>{alert.message}</Alert>
+      </Snackbar>
     </div>
   )
 }

@@ -26,8 +26,8 @@ export default function ExpenseSummary() {
       />
       <div>
         Current Total: $
-        <br />
-        Monthly Total: $
+        {/* <br />
+        Monthly Total: $ */}
       </div>
     </div>
   )

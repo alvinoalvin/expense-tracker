@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import Navbar from "./Navbar";
@@ -26,21 +26,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function createData(id, category, name, cost, datePurchased) {
+  return { id, category, name, cost, datePurchased };
+};
+
 export default function App() {
   const classes = useStyles();
+  const [rows, setRows] = useState([
+    createData(0, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
+    createData(1, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
+    createData(2, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
+
+  ]);
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid container className={classes.root}>
+      <Grid
+        container
+        className={classes.root}
+      >
         <Grid item xs={12}>
           <Navbar />
         </Grid>
         <Grid item xs={8} className={classes.leftside}>
-          <Table />
+          <Table
+            rows={rows}
+            setRows={setRows}
+          />
         </Grid>
         <Grid item xs={4} className={classes.rightside}>
-          <ExpenseForm />
-          <ExpenseSummary />
+          <ExpenseForm
+            rows={rows}
+            setRows={setRows}
+          />
+          <ExpenseSummary
+
+          />
         </Grid>
       </Grid>
     </ThemeProvider>
