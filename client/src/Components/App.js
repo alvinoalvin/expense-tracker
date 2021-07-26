@@ -36,7 +36,6 @@ export default function App() {
     createData(0, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
     createData(1, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
     createData(2, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
-
   ]);
 
   return (
@@ -58,6 +57,7 @@ export default function App() {
           <ExpenseForm
             rows={rows}
             setRows={setRows}
+            createData={createData}
           />
           <ExpenseSummary
 

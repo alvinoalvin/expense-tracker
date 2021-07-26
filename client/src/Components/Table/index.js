@@ -1,7 +1,12 @@
 import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
-import { TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@material-ui/core';
+import {
+  TableBody, TableCell, TableContainer,
+  TableHead, TableRow, Paper, Checkbox,
+  IconButton
+} from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import theme from "../theme";
 
 const StyledTableCell = withStyles((theme) => ({
@@ -32,9 +37,7 @@ const useStyles = makeStyles({
 const header = (
   <TableHead>
     <TableRow>
-      <StyledTableCell align="left">
-        <Checkbox />
-      </StyledTableCell>
+      <StyledTableCell align="left"></StyledTableCell>
       <StyledTableCell align="left">Category</StyledTableCell>
       <StyledTableCell align="left">Name</StyledTableCell>
       <StyledTableCell align="left">Cost</StyledTableCell>
@@ -52,11 +55,17 @@ export default function CustomizedTables(props) {
         {header}
         <TableBody>
           {rows.map((row) => (
-            <StyledTableRow key={row.name}
-            // onClick={(event) => handleClick(event, row.id)}
-            >
+            <StyledTableRow key={row.id}>
               <StyledTableCell align="left">
-                < Checkbox />
+                <IconButton
+                  aria-label="delete"
+                  onClick={(event) => {
+                    if (window.confirm('Are you sure you want to delete?')) {
+                      // deleteExpense(row.id);
+                    }
+                  }}>
+                  <DeleteIcon />
+                </IconButton>
               </StyledTableCell>
               <StyledTableCell align="left">{row.category}</StyledTableCell>
               <StyledTableCell align="left">{row.name}</StyledTableCell>

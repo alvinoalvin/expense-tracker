@@ -46,7 +46,7 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-export default function ExpenseForm() {
+export default function ExpenseForm(props) {
   const classes = useStyles();
   const [category, setCategory] = useState("");
   const [name, setName] = useState("");
@@ -63,7 +63,12 @@ export default function ExpenseForm() {
       name: name,
       cost: cost
     }
+    const dateObj = new Date();
     console.log(newExpense)
+
+    newExpense = props.createData("temp", category, name, cost, dateObj.toLocaleDateString());
+
+    props.setRows([...props.rows, newExpense])
     /* TODO POST TO DB */
     return true
   }
