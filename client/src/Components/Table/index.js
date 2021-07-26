@@ -47,7 +47,17 @@ const header = (
 );
 export default function CustomizedTables(props) {
   const classes = useStyles();
-  const rows = props.rows;
+  const {rows,setRows} = props;
+
+  function deleteExpense(id) {
+    const expenseCopy = rows.filter((expense) => {
+      if (expense.id !== id) {
+        return expense
+      }
+      return null;
+    });
+    setRows(expenseCopy);
+  }
 
   return (
     <TableContainer component={Paper}>
@@ -61,7 +71,7 @@ export default function CustomizedTables(props) {
                   aria-label="delete"
                   onClick={(event) => {
                     if (window.confirm('Are you sure you want to delete?')) {
-                      // deleteExpense(row.id);
+                      deleteExpense(row.id);
                     }
                   }}>
                   <DeleteIcon />
