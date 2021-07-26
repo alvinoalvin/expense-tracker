@@ -16,12 +16,13 @@ module.exports = (db) => {
     const values = [category, name, cost];
     const queryString = `
       INSERT INTO expenses (category, name, cost)
-      VALUES ($1, $2, $3)
+      VALUES ($1, $2, $3) Returning *
     `;
 
     try {
       db.query(queryString, values)
         .then(({ rows: expenses }) => {
+          console.log(expenses)
           response.json(expenses);
         });
     } catch (err) {

@@ -3,7 +3,7 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import {
   TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper, Checkbox,
+  TableHead, TableRow,
   IconButton
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -32,6 +32,9 @@ const useStyles = makeStyles({
   table: {
     minWidth: 700,
   },
+  container: {
+    height: "100%",
+  }
 });
 
 const header = (
@@ -47,10 +50,9 @@ const header = (
 );
 export default function CustomizedTables(props) {
   const classes = useStyles();
-  const {rows,setRows} = props;
+  const { rows, setRows } = props;
 
   function deleteExpense(id) {
-    console.log(id)
     const expenseCopy = rows.filter((expense) => {
       if (expense.id !== id) {
         return expense
@@ -61,7 +63,7 @@ export default function CustomizedTables(props) {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className={classes.container} >
       <Table className={classes.table} aria-label="customized table">
         {header}
         <TableBody>
@@ -81,7 +83,7 @@ export default function CustomizedTables(props) {
               <StyledTableCell align="left">{row.category}</StyledTableCell>
               <StyledTableCell align="left">{row.name}</StyledTableCell>
               <StyledTableCell align="left">${row.cost}</StyledTableCell>
-              <StyledTableCell align="left">{row.datePurchased}</StyledTableCell>
+              <StyledTableCell align="left">{row.date_created.substring(0, 10)}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
