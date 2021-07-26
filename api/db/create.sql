@@ -6,7 +6,7 @@ CREATE TABLE expenses (
   name VARCHAR(255) NOT NULL,
   category TEXT,
   cost decimal, 
-  date_created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  date_created DATE DEFAULT CURRENT_DATE,
   deleted Boolean Default FALSE
 );
 
