@@ -7,6 +7,7 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     backgroundColor: '#395277',
     textAlign: "center",
+    height: "10vh"
   },
   headerH3: {
     width: '100%'
