@@ -2,10 +2,11 @@ import React from 'react';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import { TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Checkbox } from '@material-ui/core';
+import theme from "../theme";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#E9D48A",
+    backgroundColor: theme.palette.secondary.light,
     color: theme.palette.common.black,
     fontWeight: 'bold',
   },
@@ -64,7 +65,7 @@ export default function CustomizedTables() {
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow key={row.name}
-              onClick={(event) => handleClick(event, row.id)}
+            // onClick={(event) => handleClick(event, row.id)}
             >
               <StyledTableCell align="left">
                 < Checkbox />

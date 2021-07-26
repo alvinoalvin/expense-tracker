@@ -1,8 +1,12 @@
 import React from 'react';
-import Navbar from "./Navbar/Navbar.js"
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Table from "./Table/table"
+import { makeStyles, ThemeProvider } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
+import Navbar from "./Navbar/Navbar";
+import ExpenseForm from "./ExpenseForm/ExpenseForm";
+import Table from "./Table/table";
+import theme from "./theme";
+
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,18 +30,20 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <div className={classes.root}>
-      <Grid container width={"100%"}>
-        <Grid item xs={12}>
-          <Navbar />
-        </Grid>
-        <Grid item xs={8} className={classes.leftside}>
-          <Table></Table>
-        </Grid>
-        <Grid item xs={4} className={classes.rightside}>
-          rightside
+    <ThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <Grid container width={"100%"}>
+          <Grid item xs={12}>
+            <Navbar />
           </Grid>
-      </Grid>
-    </div>
+          <Grid item xs={8} className={classes.leftside}>
+            <Table />
+          </Grid>
+          <Grid item xs={4} className={classes.rightside}>
+            <ExpenseForm />
+          </Grid>
+        </Grid>
+      </div>
+    </ThemeProvider>
   );
 }
