@@ -33,9 +33,9 @@ function createData(id, category, name, cost, datePurchased) {
 export default function App() {
   const classes = useStyles();
   const [rows, setRows] = useState([
-    createData(0, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
-    createData(1, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
-    createData(2, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', "$60.00", "5/20/2021"),
+    createData(0, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', 60.00, "5/20/2021"),
+    createData(1, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', 60.00, "5/20/2021"),
+    createData(2, 'Alternative Investments', 'Pokemon Vivid Voltage ETB', 60.00, "5/20/2021"),
   ]);
 
   return (

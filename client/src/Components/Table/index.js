@@ -50,6 +50,7 @@ export default function CustomizedTables(props) {
   const {rows,setRows} = props;
 
   function deleteExpense(id) {
+    console.log(id)
     const expenseCopy = rows.filter((expense) => {
       if (expense.id !== id) {
         return expense
@@ -79,7 +80,7 @@ export default function CustomizedTables(props) {
               </StyledTableCell>
               <StyledTableCell align="left">{row.category}</StyledTableCell>
               <StyledTableCell align="left">{row.name}</StyledTableCell>
-              <StyledTableCell align="left">{row.cost}</StyledTableCell>
+              <StyledTableCell align="left">${row.cost}</StyledTableCell>
               <StyledTableCell align="left">{row.datePurchased}</StyledTableCell>
             </StyledTableRow>
           ))}

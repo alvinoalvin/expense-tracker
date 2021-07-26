@@ -48,29 +48,38 @@ function Alert(props) {
 
 export default function ExpenseForm(props) {
   const classes = useStyles();
-  const [category, setCategory] = useState("");
-  const [name, setName] = useState("");
+  const [category, setCategory] = useState(null);
+  const [name, setName] = useState(null);
   const [cost, setCost] = useState(0);
   const [snack, setSnack] = useState(false);
   const [alert, setAlert] = useState({
     message: '',
     severity: ''
   });
-  let tempCounter = 1;
+  const [tempCounter, setTempCounter] = useState(1);
 
   function addExpense() {
     let newExpense = {
       category: category,
       name: name,
-      cost: cost
+      cost: parseFloat(cost)
     }
-    const dateObj = new Date();
-    console.log(newExpense)
 
-    newExpense = props.createData("temp" + tempCounter, category, name, cost, dateObj.toLocaleDateString());
-    tempCounter++;
+    console.log(document.querySelectorAll('input'));
+
+    const dateObj = new Date();
+    newExpense = props.createData("temp" + tempCounter, category, name, parseFloat(cost), dateObj.toLocaleDateString());
+    setTempCounter(tempCounter + 1);
 
     props.setRows([...props.rows, newExpense])
+
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    setCategory(null);
+    setName(null);
+    setCost(0);
+
     return true
   }
 
@@ -83,20 +92,20 @@ export default function ExpenseForm(props) {
   };
 
   function checkCost() {
-    if (!category) {
+    if (!category || category === "") {
       setCategory("Other")
     }
-    if (!name) {
+    if (!name || name === "") {
       setAlert({ message: 'Please enter a Name!', severity: 'warning' })
       return false
     }
-    if (cost === 0) {
-      setAlert({ message: 'Please enter a number!', severity: 'warning' })
+    if (cost <= 0 || !cost || cost === "") {
+      setAlert({ message: 'Please enter a positive number!', severity: 'warning' })
       return false
     }
     return true
   }
-  
+
   return (
     <div className={classes.expenseForm}>
       <Typography className={classes.formHeader} variant="h4">Add Expense</Typography>
