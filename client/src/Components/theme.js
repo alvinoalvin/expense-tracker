@@ -12,10 +12,14 @@ const theme = createTheme({
       dark: "#B99E41",
     },
   },
-  MuiFormLabel: {
-    root: {
-      '&$focused': {
-        color: '#E9D48A'
+  overrides: {
+    MuiInputLabel: {
+      root: {
+        color: "#B99E41",
+        '&$focused': {
+          height: '80%',
+          color: '#B99E41'
+        },
       }
     }
   }

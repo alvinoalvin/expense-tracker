@@ -34,6 +34,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: "30px",
     marginBottom: "10px",
     backgroundColor: theme.palette.secondary.main,
+    '&$hover': {
+      color: theme.palette.secondary.dark
+    },
   }
 
 }));
