@@ -1,13 +1,13 @@
 const express = require('express')
 const path = require('path');
 const app = express()
-const bodyParser = require('body-parser')
+// const bodyParser = require('body-parser')
 const PORT = (process.env.PORT || 8080);
 const db = require("./db");
 
-app.use(bodyParser.json())
+app.use(express.json())
 app.use(
-  bodyParser.urlencoded({
+  express.urlencoded({
     extended: true,
   })
 )
@@ -20,7 +20,7 @@ app.get('/api/data', (req, res) => res.json({
 }));
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/client/build/'));
+  res.sendFile(path.join(__dirname + '/public/404.html'));
 });
 
 app.listen(PORT, () => {
