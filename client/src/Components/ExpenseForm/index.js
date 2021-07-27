@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Typography, TextField, Button, Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
-import theme from "../theme";
 import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,9 +24,6 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "white",
     borderRadius: '20px',
     textAlign: 'center'
-  },
-  expenseInputFocused: {
-    color: theme.palette.secondary.main,
   },
   expenseSubmit: {
     width: "200px",
@@ -56,7 +52,6 @@ export default function ExpenseForm(props) {
     message: '',
     severity: ''
   });
-  const [tempCounter, setTempCounter] = useState(1);
 
   function addExpense() {
     if (!category) {
@@ -72,10 +67,9 @@ export default function ExpenseForm(props) {
 
     return axios.post(`api/expenses`, newExpense)
       .then(function(response) {
-        console.log(response.data[0])
         newExpense.id = response.data[0].id
         newExpense.date_created = response.data[0].date_created
-        console.log(newExpense)
+        
         props.setRows([...props.rows, newExpense])
 
         Array.from(document.querySelectorAll("input")).forEach(
@@ -100,7 +94,7 @@ export default function ExpenseForm(props) {
   };
 
   function checkCost() {
-    if (!category || category === '') {
+    if (!category || category === '' || category === "") {
       setCategory("Other")
     }
     if (!name || name === "") {
@@ -111,7 +105,6 @@ export default function ExpenseForm(props) {
       setAlert({ message: 'Please enter a positive number!', severity: 'warning' })
       return false
     }
-    console.log(category, " ", name, " ", cost)
     return true
   }
 
@@ -121,20 +114,17 @@ export default function ExpenseForm(props) {
       <TextField id="filled-basic" label="Category"
         variant="outlined"
         className={classes.expenseInput}
-        classes={{ focused: classes.expenseInputFocused }}
         onChange={(event) => setCategory(event.target.value)}
       />
       <TextField id="filled-basic" label="Name"
         variant="outlined"
         className={classes.expenseInput}
-        classes={{ focused: classes.expenseInputFocused }}
         onChange={(event) => setName(event.target.value)}
       />
       <TextField id="filled-basic" label="Cost"
         type="number"
         variant="outlined"
         className={classes.expenseInput}
-        classes={{ focused: classes.expenseInputFocused }}
         onChange={(event) => setCost(event.target.value)}
       />
       <Button variant="contained"

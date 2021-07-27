@@ -9,7 +9,6 @@ import {
 import DeleteIcon from '@material-ui/icons/Delete';
 import theme from "../theme";
 import axios from "axios";
-
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.secondary.light,
