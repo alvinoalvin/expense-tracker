@@ -10,4 +10,4 @@ CREATE TABLE expenses (
   deleted Boolean Default FALSE
 );
 
-insert into expenses (name, category, cost) VALUES ('Test', 'sampple', 20.00);
+insert into expenses (name, category, cost) VALUES ('Test', 'sample', 20.00);

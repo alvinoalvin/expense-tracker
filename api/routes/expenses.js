@@ -22,7 +22,6 @@ module.exports = (db) => {
     try {
       db.query(queryString, values)
         .then(({ rows: expenses }) => {
-          console.log(expenses)
           response.json(expenses);
         });
     } catch (err) {
