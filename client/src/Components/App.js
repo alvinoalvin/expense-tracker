@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     fontFamily: "Roboto",
-    height: "90vh",
+    height: "90vh"
   },
   leftside: {
     flexGrow: 1,
@@ -35,14 +35,20 @@ function createData(id, category, name, cost, datePurchased) {
 export default function App() {
   const classes = useStyles();
   const [rows, setRows] = useState([]);
+  const [total, setTotal] = useState(0);
 
 
   useEffect(() => {
     axios.get(`http://localhost:8080/api/expenses`)
       .then(response => {
-        setRows(response.data)
+        setRows(response.data);
+        let tempTotal = 0;
+        for (let data of response.data) {
+          tempTotal += parseFloat(data.cost);
+        }
+        setTotal(tempTotal);
       }).catch(error => console.log(error));
-  }, [setRows]);
+  }, [rows, setRows]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -64,7 +70,7 @@ export default function App() {
             setRows={setRows}
             createData={createData}
           />
-          <ExpenseSummary />
+          <ExpenseSummary total={total} />
         </Grid>
       </Grid>
     </ThemeProvider>
