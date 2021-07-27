@@ -3,7 +3,7 @@ import { Typography, TextField, Button, Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from "../theme";
-
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   formHeader: {
@@ -48,8 +48,8 @@ function Alert(props) {
 
 export default function ExpenseForm(props) {
   const classes = useStyles();
-  const [category, setCategory] = useState(null);
-  const [name, setName] = useState(null);
+  const [category, setCategory] = useState("");
+  const [name, setName] = useState("");
   const [cost, setCost] = useState(0);
   const [snack, setSnack] = useState(false);
   const [alert, setAlert] = useState({
@@ -59,28 +59,36 @@ export default function ExpenseForm(props) {
   const [tempCounter, setTempCounter] = useState(1);
 
   function addExpense() {
+    if (!category) {
+      setCategory("Other")
+    };
+
     let newExpense = {
       category: category,
       name: name,
       cost: parseFloat(cost)
     }
 
-    console.log(document.querySelectorAll('input'));
 
-    const dateObj = new Date();
-    newExpense = props.createData("temp" + tempCounter, category, name, parseFloat(cost), dateObj.toLocaleDateString());
-    setTempCounter(tempCounter + 1);
+    return axios.post(`api/expenses`, newExpense)
+      .then(function(response) {
+        console.log(response.data[0])
+        newExpense.id = response.data[0].id
+        newExpense.date_created = response.data[0].date_created
+        console.log(newExpense)
+        props.setRows([...props.rows, newExpense])
 
-    props.setRows([...props.rows, newExpense])
+        Array.from(document.querySelectorAll("input")).forEach(
+          input => (input.value = "")
+        );
 
-    Array.from(document.querySelectorAll("input")).forEach(
-      input => (input.value = "")
-    );
-    setCategory(null);
-    setName(null);
-    setCost(0);
-
-    return true
+        setCategory("");
+        setName("");
+        setCost(0);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
 
   const handleClose = (event, reason) => {
@@ -92,7 +100,7 @@ export default function ExpenseForm(props) {
   };
 
   function checkCost() {
-    if (!category || category === "") {
+    if (!category || category === '') {
       setCategory("Other")
     }
     if (!name || name === "") {
@@ -103,6 +111,7 @@ export default function ExpenseForm(props) {
       setAlert({ message: 'Please enter a positive number!', severity: 'warning' })
       return false
     }
+    console.log(category, " ", name, " ", cost)
     return true
   }
 
