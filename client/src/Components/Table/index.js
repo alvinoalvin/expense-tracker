@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import theme from "../theme";
+import axios from "axios";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -53,15 +54,20 @@ export default function CustomizedTables(props) {
   const { rows, setRows } = props;
 
   function deleteExpense(id) {
-    const expenseCopy = rows.filter((expense) => {
-      if (expense.id !== id) {
-        return expense
-      }
-      return null;
-    });
-    setRows(expenseCopy);
+    return axios.delete(`api/expenses/?array=[${id}]`, { id })
+      .then(function(response) {
+        const expenseCopy = rows.filter((expense) => {
+          if (expense.id !== id) {
+            return expense
+          }
+          return null;
+        });
+        setRows(expenseCopy);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   }
-
   return (
     <TableContainer className={classes.container} >
       <Table className={classes.table} aria-label="customized table">

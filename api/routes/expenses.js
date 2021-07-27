@@ -3,7 +3,7 @@ const router = require("express").Router();
 module.exports = (db) => {
   router.get("/expenses", (request, response) => {
     db.query(
-      `SELECT * FROM expenses ORDER BY id ASC`
+      `SELECT * FROM expenses where deleted = false ORDER BY id ASC`
     ).then(({ rows: expenses }) => {
       response.json(expenses);
     }).catch(error => { error });
@@ -29,6 +29,33 @@ module.exports = (db) => {
       next(err);
     }
   });
-  
+
+  router.delete("/expenses", (request, response) => {
+    const arr = JSON.parse(request.query.array);
+    let paramStr = "(";
+    for (let i = 1; i <= arr.length; i++) {
+      if (i != arr.length) {
+        paramStr += `$${i},`;
+      } else {
+        paramStr += `$${i}`;
+      }
+    }
+    paramStr += ")";
+
+    const queryString = `UPDATE expenses SET deleted = true WHERE id IN ${paramStr} RETURNING *`;
+
+    try {
+      db.query(queryString, arr)
+        .then((result) => {
+          response.json({ msg: 'success' })
+        })
+        .catch((err) => {
+          console.log(err.message)
+        });
+    } catch (err) {
+      next(err);
+    }
+  });
+
   return router;
 };

@@ -6,8 +6,7 @@ import ExpenseForm from "./ExpenseForm";
 import ExpenseSummary from "./ExpenseSummary";
 import Table from "./Table";
 import theme from "./theme";
-
-const axios = require('axios');
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {

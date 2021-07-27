@@ -3,8 +3,7 @@ import { Typography, TextField, Button, Snackbar } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
 import theme from "../theme";
-
-const axios = require('axios');
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   formHeader: {
