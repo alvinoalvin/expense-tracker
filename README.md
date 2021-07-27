@@ -29,6 +29,8 @@ The site was designed on figma before any implmentation can into play. Feel free
 6. Once the installation is done, we can run the server: `npm start`
 7. Visit `http://localhost:3000/`
 
+Note: app is not tested with environment variables
+
 ## Technologies Involved
 
 - PostgreSQL DB
