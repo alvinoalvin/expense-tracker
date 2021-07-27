@@ -19,7 +19,7 @@ The site was designed on figma before any implmentation can into play. Feel free
 
 - user: `labber`
 - password: `labber`
-- database: `midterm`
+- database: `expenses`
 - host: `localhost`
 - port: `5432` //this is your database port
 
